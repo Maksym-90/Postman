@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "c141f320-7ca3-4529-a08e-7015df32bbb6",
+		"name": "Data set",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Request1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var companies = pm.variables.get(\"companies\");\r",
+							" \r",
+							"if(!companies) {\r",
+							"    var companies = ['Gooogle', 'Facebook', 'Amazon', 'Apple'];\r",
+							"}\r",
+							" \r",
+							"let currentCompany = companies.shift();\r",
+							"pm.environment.set(\"company\", currentCompany);\r",
+							"pm.environment.set(\"companies\", companies);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var companies = pm.variables.get(\"companies\");\r",
+							" \r",
+							"if(companies && companies.length > 0) {\r",
+							"    postman.setNextRequest(\"Request1\");\r",
+							"} else {\r",
+							"    postman.setNextRequest(null);\r",
+							"    pm.environment.unset(\"companies\");\r",
+							"    pm.environment.unset(\"company\"); // <== you can unset \"company\" variable too\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{company}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://httpbin.org/post",
+					"protocol": "https",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
