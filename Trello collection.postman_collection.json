@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "POST CreateNewBoard",
+			"name": "POST CreateNewBoard_1",
 			"event": [
 				{
 					"listen": "test",
